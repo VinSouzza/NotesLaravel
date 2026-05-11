@@ -17,17 +17,17 @@ class UserTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'username' => 'user1@teste.com',
-                'password' => bcrypt('adc123456'),
+                'password' => bcrypt('abc123456'),
                 'created_at' => date('Y-m-d H:i:s')
             ],
             [
                 'username' => 'user2@teste.com',
-                'password' => bcrypt('adc123456'),
+                'password' => bcrypt('abc123456'),
                 'created_at' => date('Y-m-d H:i:s')
             ],
             [
                 'username' => 'user3@teste.com',
-                'password' => bcrypt('adc123456'),
+                'password' => bcrypt('abc123456'),
                 'created_at' => date('Y-m-d H:i:s')
             ],
         ]);
