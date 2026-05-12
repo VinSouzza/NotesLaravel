@@ -60,7 +60,7 @@ class AuthController extends Controller
             ]
         ]);
 
-        redirect('/');
+        return redirect()->to('/');
     }
 
     public function logout(){
