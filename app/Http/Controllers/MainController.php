@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
 
 class MainController extends Controller
 {
@@ -18,5 +21,27 @@ class MainController extends Controller
     }
     public function newNote(){
         echo 'Eu to criando uma nova nota';
+    }
+
+    public function editNote($id){
+        
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+            return redirect()->route('home');
+        }
+        
+        echo "estou editando a nota com id = $id";
+    }
+
+    public function deleteNote($id){
+        
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+            return redirect()->route('home');
+        }
+        
+        echo "estou deletando a nota com id = $id";
     }
 }
