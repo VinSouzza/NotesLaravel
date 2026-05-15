@@ -5,18 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\User;
 use App\Services\Operations;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Redirect;
-use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 
 class MainController extends Controller
 {
     public function index(){
         // load users notes
         $id = session('user.id');
-        $notes = User::find($id)->notes()->get()->toArray();
+        $notes = User::find($id)->notes()->whereNull('deleted_at')->get()->toArray();
 
 
         // show home view
@@ -117,8 +113,31 @@ class MainController extends Controller
     public function deleteNote($id){
         
         $id = Operations::decryptId($id);
-        echo "estou deletando a nota com id = $id";
+        
+        // load note
+        $note = Note::find($id);
+
+        // show delete note confirmation
+        return view('delete_note', ['note' => $note]);
     }
 
+    public function deleteNoteConfirm($id){
+
+        // check if $id is encrypted
+        $id = Operations::decryptId($id);
+
+        // load note
+        $note = Note::find($id);
+        
+        // 1. hard delete 
+        // $note->delete();
+
+        // 2. soft delete 
+        $note->deleted_at = date('Y:m:d H:i:s');
+        $note->save();
+    
+        // redirect to home 
+        return redirect()->route('home');    
+    }
 
 }

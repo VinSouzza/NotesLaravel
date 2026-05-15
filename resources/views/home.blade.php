@@ -24,9 +24,9 @@
                         <i class="fa-regular fa-pen-to-square me-2"></i>New Note
                     </a>
                 </div>
-                @foreach ($notes as $note)
-                @include('note')
-                @endforeach
+                    @foreach ($notes as $note)
+                        @include('note')
+                    @endforeach
                 @endif
             </div>
         </div>
